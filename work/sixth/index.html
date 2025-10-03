@@ -1,21 +1,88 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../../common/css/reset.css">
-  <link rel="stylesheet" href="../../common/css/base.css">
-  <link rel="stylesheet" href="./css/style.css">
-  <title>Document</title>
-</head>
-<body>
-  <div class="wrapper" id="wrapper">
-    <button type="button" class="btn search-btn" id="pokemon_search">ポケモンを探す</button>
-  </div>
-  <script src="../../common/js/jquery.js"></script>
-  <script>
-    // 回答はここに書いてね
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../common/css/reset.css" />
+    <link rel="stylesheet" href="../../common/css/base.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="wrapper" id="wrapper">
+      <button type="button" class="btn search-btn" id="pokemon_search">
+        ポケモンを探す
+      </button>
+    </div>
+    <script src="../../common/js/jquery.js"></script>
+    <script>
+      let encountHtml = () => {
+        const pokemonId = 1 + Math.floor(Math.random() * 151);
+        $.ajax({
+          url: `https://pokeapi.co/api/v2/pokemon/${pokemonId}/`,
+          method: "GET",
+        })
+          .done(function (res) {
+            $.ajax({
+              url: res.species.url,
+              method: "GET",
+            }).done(function (nameData) {
+              $("#wrapper").children().remove();
+              $("#wrapper").append(
+                `<p class="name">${
+                  nameData.names.find((name) => name.language.name === "ja")
+                    .name
+                }</p><div><img class="img" src="${
+                  res.sprites.front_default
+                }" alt=""></div><div><button class="btn" id="catch">捕まえる</button> <button class="btn" data-js="reset">逃げる</button></div>`
+              );
+            });
+          })
+          .fail(function (err) {
+            console.error("エラーが発生しました");
+          });
+      };
+
+      $(document).on("click", "#pokemon_search", encountHtml);
+
+      let doneHtml = () => {
+        $.ajax({
+          url: "https://pokeapi.co/api/v2/item/4",
+          method: "GET",
+        })
+          .done(function (res) {
+            $("#wrapper").children().remove();
+            $("#wrapper").append(
+              `<p class="name">ゲットしました</p><div><img class="img" src="${res.sprites.default}" alt=""></div><button class="btn" data-js="reset">戻る</button>`
+            );
+          })
+          .fail(function (err) {
+            console.error("エラーが発生しました");
+          });
+      };
+
+      let failHtml = () => {
+        $("#wrapper").children().remove();
+        $("#wrapper").append(
+          `<p class="text">逃げられてしまった...</p><button class="btn mt" data-js="reset">戻る</button>`
+        );
+      };
+
+      $(document).on("click", "#catch", () => {
+        if (Math.random() < 0.5) {
+          doneHtml();
+        } else {
+          failHtml();
+        }
+      });
+
+      $(document).on("click", '[data-js="reset"]', () => {
+        $("#wrapper").children().remove();
+        $("#wrapper").append(
+          `<button type="button" class="btn search-btn" id="pokemon_search">ポケモンを探す</button>`
+        );
+      });
+    </script>
+  </body>
 </html>

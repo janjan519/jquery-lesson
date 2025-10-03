@@ -1,20 +1,23 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
     <title>jQuery</title>
-    <link rel="stylesheet" href="../../common/css/reset.css">
-    <link rel="stylesheet" href="../../common/css/base.css">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../../common/css/reset.css" />
+    <link rel="stylesheet" href="../../common/css/base.css" />
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
     <div class="wrapper">
       <ul class="menu__list clearfix">
         <li>
           <p class="menu__list__title">Animal</p>
-          <ul class="menu__list__childList" style="display: none;">
+          <ul class="menu__list__childList" style="display: none">
             <li>
               <p class="menu__list__childList__title">Lion</p>
             </li>
@@ -31,7 +34,7 @@
         </li>
         <li>
           <p class="menu__list__title">Plant</p>
-          <ul class="menu__list__childList" style="display: none;">
+          <ul class="menu__list__childList" style="display: none">
             <li>
               <p class="menu__list__childList__title">Cedar</p>
             </li>
@@ -61,6 +64,16 @@
       // ・連続で何回もホバーした時、手を止めているのにリストがスライドし続けないか
       // ・出てきたリストの上にホバーできるか
       // ※必ずレビュー前に上記挙動が問題ないか確認すること
+      $(function () {
+        $(".menu__list > li").hover(
+          function () {
+            $(this).children(".menu__list__childList").stop(true).slideDown();
+          },
+          function () {
+            $(this).children(".menu__list__childList").stop(true).slideUp();
+          }
+        );
+      });
     </script>
   </body>
 </html>
