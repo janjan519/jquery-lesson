@@ -17,7 +17,7 @@
     </div>
     <script src="../../common/js/jquery.js"></script>
     <script>
-      let encountHtml = () => {
+      let encountHtml = function () {
         const pokemonId = 1 + Math.floor(Math.random() * 151);
         $.ajax({
           url: `https://pokeapi.co/api/v2/pokemon/${pokemonId}/`,
@@ -31,8 +31,9 @@
               $("#wrapper").children().remove();
               $("#wrapper").append(
                 `<p class="name">${
-                  nameData.names.find((name) => name.language.name === "ja")
-                    .name
+                  nameData.names.find(function (name) {
+                    return name.language.name === "ja";
+                  }).name
                 }</p>
                 <div>
                   <img class="img" src="${res.sprites.front_default}" alt="">
@@ -51,7 +52,7 @@
 
       $(document).on("click", "#pokemon_search", encountHtml);
 
-      let doneHtml = () => {
+      let doneHtml = function () {
         $.ajax({
           url: "https://pokeapi.co/api/v2/item/4",
           method: "GET",
@@ -71,7 +72,7 @@
           });
       };
 
-      let failHtml = () => {
+      let failHtml = function () {
         $("#wrapper").children().remove();
         $("#wrapper").append(
           `<p class="text">逃げられてしまった...</p>
@@ -79,7 +80,7 @@
         );
       };
 
-      $(document).on("click", "#catch", () => {
+      $(document).on("click", "#catch", function () {
         if (Math.random() < 0.5) {
           doneHtml();
         } else {
@@ -87,7 +88,7 @@
         }
       });
 
-      $(document).on("click", '[data-js="reset"]', () => {
+      $(document).on("click", '[data-js="reset"]', function () {
         $("#wrapper").children().remove();
         $("#wrapper").append(
           `<button type="button" class="btn search-btn" id="pokemon_search">ポケモンを探す</button>`
