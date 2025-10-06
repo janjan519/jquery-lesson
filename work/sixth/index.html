@@ -33,9 +33,14 @@
                 `<p class="name">${
                   nameData.names.find((name) => name.language.name === "ja")
                     .name
-                }</p><div><img class="img" src="${
-                  res.sprites.front_default
-                }" alt=""></div><div><button class="btn" id="catch">捕まえる</button> <button class="btn" data-js="reset">逃げる</button></div>`
+                }</p>
+                <div>
+                  <img class="img" src="${res.sprites.front_default}" alt="">
+                </div>
+                <div>
+                  <button class="btn" id="catch">捕まえる</button> 
+                  <button class="btn" data-js="reset">逃げる</button>
+                </div>`
               );
             });
           })
@@ -54,7 +59,11 @@
           .done(function (res) {
             $("#wrapper").children().remove();
             $("#wrapper").append(
-              `<p class="name">ゲットしました</p><div><img class="img" src="${res.sprites.default}" alt=""></div><button class="btn" data-js="reset">戻る</button>`
+              `<p class="name">ゲットしました</p>
+              <div>
+                <img class="img" src="${res.sprites.default}" alt="">
+              </div>
+              <button class="btn" data-js="reset">戻る</button>`
             );
           })
           .fail(function (err) {
@@ -65,7 +74,8 @@
       let failHtml = () => {
         $("#wrapper").children().remove();
         $("#wrapper").append(
-          `<p class="text">逃げられてしまった...</p><button class="btn mt" data-js="reset">戻る</button>`
+          `<p class="text">逃げられてしまった...</p>
+          <button class="btn mt" data-js="reset">戻る</button>`
         );
       };
 
